@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ing_economica_ecosoft/screens/login_screen/components/login_content.dart';
+
 import 'dart:math' as math;
 
-import 'center_widget/center_widget.dart';
+import 'components/center_widget/center_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: bottomWidget(screenSize.width)
           ),
           CenterWidget(size: screenSize),
-          // const LoginContent(),
+          const LoginContent(),
         ],
       ),
     );
