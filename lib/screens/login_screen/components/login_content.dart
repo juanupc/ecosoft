@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:ing_economica_ecosoft/screens/login_screen/animations/change_screen_animation.dart';
 import 'package:ing_economica_ecosoft/utils/constants.dart';
 
+import 'bottom_text.dart';
 import 'top_text.dart';
 
 enum Screens { createAccount, wellcomeBack }
 
-class LoginContent extends StatelessWidget {
+class LoginContent extends StatefulWidget {
   const LoginContent({Key? key}) : super(key: key);
 
+  @override
+  State<LoginContent> createState() => _LoginContentState();
+}
+
+class _LoginContentState extends State<LoginContent>  
+with TickerProviderStateMixin{
   Widget inputfield(String hint, IconData iconData) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
@@ -89,6 +97,35 @@ class LoginContent extends StatelessWidget {
     );
   }
 
+  Widget forgotPassword(){
+    return Padding (
+      padding: const EdgeInsets.symmetric(horizontal: 110),
+      child: TextButton(
+        onPressed: () {},
+        child: const Text(
+          '¿Olvidaste tu contraseña?',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: ksecondaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+@override
+  void initState() {
+    ChangeScreenAnimation.initalize(vsync: this);
+    super.initState();
+  }
+
+@override
+void dispose() {
+  ChangeScreenAnimation.dispose();
+  super.dispose();
+}
+
   @override
   Widget build(BuildContext context) {
     const currentScreen = Screens.createAccount;
@@ -103,16 +140,31 @@ class LoginContent extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  inputfield('Nombre', Icons.person_outline),
-                  inputfield('Correo', Icons.mail_outline),
-                  inputfield('Contraseña', Icons.lock_clock_outlined),
-                  loginbutton('Crear Cuenta'),
-                  orDivider(),
-                  logos(),
-                ],
+                children:
+                    currentScreen == Screens.createAccount
+                        ? [
+                          inputfield('Nombre', Icons.person_outline),
+                          inputfield('Correo', Icons.mail_outline),
+                          inputfield('Contraseña', Icons.lock_clock_outlined),
+                          loginbutton('Crear Cuenta'),
+                          orDivider(),
+                          logos(),
+                        ]
+                        : [
+                          inputfield('Correo', Icons.mail_outline),
+                          inputfield('Contraseña', Icons.lock_clock_outlined),
+                          loginbutton('Inicio de Sesión'),
+                          forgotPassword(),
+                        ],
               ),
             ],
+          ),
+        ),
+        const Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 50),
+            child: BottomText(screen: currentScreen),
           ),
         ),
       ],
